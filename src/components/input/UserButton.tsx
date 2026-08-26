@@ -25,10 +25,12 @@ import {
   LogOut,
   Moon,
   Settings,
+  Sparkles,
   Sun,
   SunMoon,
   UserCircle,
 } from '@/components/icons';
+import { useSimpleMode } from '@/components/simple';
 import { DOCS_URL } from '@/lib/constants';
 import { languages } from '@/lib/lang';
 
@@ -43,6 +45,7 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
   const { t, labels } = useMessages();
   const { locale, saveLocale } = useLocale();
   const { theme, setTheme } = useTheme();
+  const { simpleMode, toggleSimpleMode } = useSimpleMode();
   const { isMobile } = useMobile();
   const router = useRouter();
 
@@ -213,6 +216,22 @@ export function UserButton({ showText = true, onClose }: UserButtonProps) {
                 </Menu>
               </Popover>
             </SubmenuTrigger>
+            <MenuItem
+              id="simple-mode"
+              onAction={() => {
+                toggleSimpleMode();
+                onClose?.();
+              }}
+            >
+              <Row alignItems="center" gap>
+                <Icon>
+                  <Sparkles />
+                </Icon>
+                <Text>
+                  {simpleMode ? t(labels.switchToFullView) : t(labels.switchToSimpleView)}
+                </Text>
+              </Row>
+            </MenuItem>
             {items.map(({ id, path, label, icon, separator, target, external }: any) => {
               if (separator) {
                 return <MenuSeparator key={id} />;

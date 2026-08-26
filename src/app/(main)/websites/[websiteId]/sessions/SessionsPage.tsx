@@ -1,9 +1,10 @@
 'use client';
-import { Column, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
+import { Column, Tab, TabList, TabPanel, Tabs, Text } from '@umami/react-zen';
 import { type Key, useState } from 'react';
 import { WebsiteControls } from '@/app/(main)/websites/[websiteId]/WebsiteControls';
 import { Panel } from '@/components/common/Panel';
 import { useMessages } from '@/components/hooks';
+import { PAGE_HELP, useSimpleMode } from '@/components/simple';
 import { getItem, setItem } from '@/lib/storage';
 import { SessionModal } from './SessionModal';
 import { SessionProperties } from './SessionProperties';
@@ -14,6 +15,7 @@ const KEY_NAME = 'umami.sessions.tab';
 export function SessionsPage({ websiteId }) {
   const [tab, setTab] = useState(getItem(KEY_NAME) || 'activity');
   const { t, labels } = useMessages();
+  const { simpleMode } = useSimpleMode();
 
   const handleSelect = (value: Key) => {
     setItem(KEY_NAME, value);
@@ -25,6 +27,11 @@ export function SessionsPage({ websiteId }) {
       <WebsiteControls websiteId={websiteId} />
       <SessionModal websiteId={websiteId} />
       <Panel minWidth="0" width="100%" style={{ overflow: 'hidden' }}>
+        {simpleMode && (
+          <Text size="sm" color="muted">
+            {PAGE_HELP.sessions}
+          </Text>
+        )}
         <Tabs
           selectedKey={tab}
           onSelectionChange={handleSelect}

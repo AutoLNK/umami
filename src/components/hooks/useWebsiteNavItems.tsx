@@ -1,5 +1,6 @@
 import {
   AlignEndHorizontal,
+  BookOpen,
   ChartPie,
   Clock,
   Eye,
@@ -10,6 +11,7 @@ import {
   UserPlus,
   Video,
 } from '@/components/icons';
+import { useSimpleMode } from '@/components/simple';
 import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
 import { useMessages } from './useMessages';
 import { useNavigation } from './useNavigation';
@@ -17,6 +19,7 @@ import { useNavigation } from './useNavigation';
 export function useWebsiteNavItems(websiteId: string) {
   const { t, labels } = useMessages();
   const { pathname, renderUrl } = useNavigation();
+  const { simpleMode } = useSimpleMode();
   const resetParams = {
     search: undefined,
     page: undefined,
@@ -78,6 +81,16 @@ export function useWebsiteNavItems(websiteId: string) {
           icon: <Sheet />,
           path: renderPath('/breakdown'),
         },
+        ...(simpleMode
+          ? [
+              {
+                id: 'glossary',
+                label: 'Glossary',
+                icon: <BookOpen />,
+                path: renderPath('/glossary'),
+              },
+            ]
+          : []),
       ],
     },
     {

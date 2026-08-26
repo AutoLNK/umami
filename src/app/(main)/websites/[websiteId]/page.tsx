@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import { WebsitePage } from './WebsitePage';
+import { SimpleWebsitePageSwitch } from '@/components/simple';
 
 export default async function ({ params }: { params: Promise<{ websiteId: string }> }) {
   const { websiteId } = await params;
 
-  return <WebsitePage websiteId={websiteId} />;
+  return <SimpleWebsitePageSwitch websiteId={websiteId} />;
 }
 
 export const metadata: Metadata = {

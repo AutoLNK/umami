@@ -427,6 +427,9 @@ export const labels: Record<string, string> = {
   twoFactorGlobalActiveTooltip: 'label.two-factor-global-active-tooltip',
   twoFactorVerify: 'label.two-factor-verify',
   twoFactorLogin: 'label.two-factor-login',
+  simpleMode: 'label.simple-mode',
+  switchToSimpleView: 'label.switch-to-simple-view',
+  switchToFullView: 'label.switch-to-full-view',
 };
 
 export const messages: Record<string, string> = {
@@ -508,4 +511,5 @@ export const messages: Record<string, string> = {
   twoFactorErrorNoPendingSetup: 'message.two-factor-error-no-pending-setup',
   twoFactorErrorNotConfigured: 'message.two-factor-error-not-configured',
   replayMinDurationDescription: 'message.replay-min-duration-description',
+  simpleModeDescription: 'message.simple-mode-description',
 };

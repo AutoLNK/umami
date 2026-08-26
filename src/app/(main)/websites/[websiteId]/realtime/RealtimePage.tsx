@@ -1,5 +1,5 @@
 'use client';
-import { Grid } from '@umami/react-zen';
+import { Grid, Text } from '@umami/react-zen';
 import { firstBy } from 'thenby';
 import { GridRow } from '@/components/common/GridRow';
 import { PageBody } from '@/components/common/PageBody';
@@ -7,6 +7,7 @@ import { Panel } from '@/components/common/Panel';
 import { useMobile, useRealtimeQuery } from '@/components/hooks';
 import { RealtimeChart } from '@/components/metrics/RealtimeChart';
 import { WorldMap } from '@/components/metrics/WorldMap';
+import { PAGE_HELP, useSimpleMode } from '@/components/simple';
 import { percentFilter } from '@/lib/filters';
 import { RealtimeCountries } from './RealtimeCountries';
 import { RealtimeHeader } from './RealtimeHeader';
@@ -17,6 +18,7 @@ import { RealtimeReferrers } from './RealtimeReferrers';
 export function RealtimePage({ websiteId }: { websiteId: string }) {
   const { data, isLoading, error } = useRealtimeQuery(websiteId);
   const { isMobile } = useMobile();
+  const { simpleMode } = useSimpleMode();
 
   if (isLoading || error) {
     return <PageBody isLoading={isLoading} error={error} />;
@@ -31,6 +33,11 @@ export function RealtimePage({ websiteId }: { websiteId: string }) {
   return (
     <Grid gap="3">
       <RealtimeHeader data={data} />
+      {simpleMode && (
+        <Text size="sm" color="muted">
+          {PAGE_HELP.realtime}
+        </Text>
+      )}
       <Panel>
         <RealtimeChart data={data} unit="minute" />
       </Panel>
