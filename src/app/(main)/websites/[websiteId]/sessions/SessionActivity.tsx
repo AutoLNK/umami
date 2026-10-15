@@ -15,6 +15,7 @@ import { LoadingPanel } from '@/components/common/LoadingPanel';
 import { useMessages, useMobile, useSessionActivityQuery, useTimezone } from '@/components/hooks';
 import { Eye, FileText } from '@/components/icons';
 import { EventData } from '@/components/metrics/EventData';
+import { EVENT_DICTIONARY, useSimpleMode } from '@/components/simple';
 import { Lightning } from '@/components/svg';
 
 export function SessionActivity({
@@ -40,6 +41,7 @@ export function SessionActivity({
     distinctId,
   );
   const { isMobile } = useMobile();
+  const { simpleMode } = useSimpleMode();
   let lastDay = null;
 
   const renderLink = (label: string, hostname: string) => {
@@ -61,6 +63,7 @@ export function SessionActivity({
         {data?.map(({ eventId, createdAt, urlPath, eventName, visitId, hostname, hasData }) => {
           const showHeader = !lastDay || !isSameDay(new Date(lastDay), new Date(createdAt));
           lastDay = createdAt;
+          const meaning = simpleMode && eventName ? EVENT_DICTIONARY[eventName] : null;
 
           return (
             <Column key={eventId} gap>
@@ -77,6 +80,11 @@ export function SessionActivity({
                   <Text weight="bold" style={{ maxWidth: isMobile ? '400px' : null }} truncate>
                     {eventName || renderLink(urlPath, hostname)}
                   </Text>
+                  {meaning && (
+                    <Text color="muted" truncate>
+                      — {meaning.label}
+                    </Text>
+                  )}
                   {hasData > 0 && <PropertiesButton websiteId={websiteId} eventId={eventId} />}
                 </Row>
               </Row>

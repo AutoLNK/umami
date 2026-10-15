@@ -1,13 +1,15 @@
-import { Grid, Heading, Row, Tab, TabList, TabPanel, Tabs } from '@umami/react-zen';
+import { Grid, Heading, Row, Tab, TabList, TabPanel, Tabs, Text } from '@umami/react-zen';
 import { GridRow } from '@/components/common/GridRow';
 import { Panel } from '@/components/common/Panel';
 import { useMessages, useMobile } from '@/components/hooks';
 import { MetricsTable } from '@/components/metrics/MetricsTable';
 import { WeeklyTraffic } from '@/components/metrics/WeeklyTraffic';
 import { WorldMap } from '@/components/metrics/WorldMap';
+import { PAGES_EXTRA_TABS, SECTION_HELP, useSimpleMode } from '@/components/simple';
 
 export function WebsitePanels({ websiteId }: { websiteId: string }) {
   const { t, labels } = useMessages();
+  const { simpleMode } = useSimpleMode();
   const tableProps = {
     websiteId,
     limit: 10,
@@ -23,12 +25,19 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
       <GridRow layout="two" {...rowProps}>
         <Panel>
           <Heading size="2xl">{t(labels.pages)}</Heading>
+          {simpleMode && (
+            <Text size="sm" color="muted">
+              {SECTION_HELP.pages}
+            </Text>
+          )}
           <Tabs>
             <TabList>
               <Tab id="path">{t(labels.path)}</Tab>
               <Tab id="fullPath">{t(labels.url)}</Tab>
               <Tab id="entry">{t(labels.entry)}</Tab>
               <Tab id="exit">{t(labels.exit)}</Tab>
+              {simpleMode && <Tab id="title">{PAGES_EXTRA_TABS.title}</Tab>}
+              {simpleMode && <Tab id="hostname">{PAGES_EXTRA_TABS.hostname}</Tab>}
             </TabList>
             <TabPanel id="path">
               <MetricsTable type="path" title={t(labels.path)} {...tableProps} />
@@ -42,10 +51,29 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
             <TabPanel id="exit">
               <MetricsTable type="exit" title={t(labels.path)} {...tableProps} />
             </TabPanel>
+            {simpleMode && (
+              <TabPanel id="title">
+                <MetricsTable type="title" title={PAGES_EXTRA_TABS.titleColumn} {...tableProps} />
+              </TabPanel>
+            )}
+            {simpleMode && (
+              <TabPanel id="hostname">
+                <MetricsTable
+                  type="hostname"
+                  title={PAGES_EXTRA_TABS.hostnameColumn}
+                  {...tableProps}
+                />
+              </TabPanel>
+            )}
           </Tabs>
         </Panel>
         <Panel>
           <Heading size="2xl">{t(labels.sources)}</Heading>
+          {simpleMode && (
+            <Text size="sm" color="muted">
+              {SECTION_HELP.sources}
+            </Text>
+          )}
           <Tabs>
             <TabList>
               <Tab id="referrer">{t(labels.referrers)}</Tab>
@@ -64,6 +92,11 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
       <GridRow layout="two" {...rowProps}>
         <Panel>
           <Heading size="2xl">{t(labels.environment)}</Heading>
+          {simpleMode && (
+            <Text size="sm" color="muted">
+              {SECTION_HELP.environment}
+            </Text>
+          )}
           <Tabs>
             <TabList>
               <Tab id="browser">{t(labels.browsers)}</Tab>
@@ -84,6 +117,11 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
 
         <Panel>
           <Heading size="2xl">{t(labels.location)}</Heading>
+          {simpleMode && (
+            <Text size="sm" color="muted">
+              {SECTION_HELP.location}
+            </Text>
+          )}
           <Tabs>
             <TabList>
               <Tab id="country">{t(labels.countries)}</Tab>
@@ -110,6 +148,11 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
 
         <Panel>
           <Heading size="2xl">{t(labels.traffic)}</Heading>
+          {simpleMode && (
+            <Text size="sm" color="muted">
+              {SECTION_HELP.traffic}
+            </Text>
+          )}
           <Row border="bottom" marginBottom="4" />
           <WeeklyTraffic websiteId={websiteId} />
         </Panel>

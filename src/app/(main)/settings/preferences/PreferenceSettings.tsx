@@ -1,5 +1,6 @@
 import { Column, Label } from '@umami/react-zen';
 import { useLoginQuery, useMessages } from '@/components/hooks';
+import { SimpleModeSetting } from '@/components/simple';
 import { DateRangeSetting } from './DateRangeSetting';
 import { LanguageSetting } from './LanguageSetting';
 import { ThemeSetting } from './ThemeSetting';
@@ -32,6 +33,7 @@ export function PreferenceSettings() {
         <Label>{t(labels.theme)}</Label>
         <ThemeSetting />
       </Column>
+      <SimpleModeSetting />
       <Column>
         <Label>{t(labels.version)}</Label>
         <VersionSetting />
